@@ -3,7 +3,7 @@ const exec = require('child_process').exec;
 const pkg = require('../package.json');
 
 // const btcConverter = './src/main.js'; //Unix
-const btcConverter = 'node.exe ./src/main.js'; // Windows
+const btcConverter = 'node ./src/main.js'; // Windows
 
 describe('Main CLI', () => {
   it('should return version of btc-converter', (done) => {
@@ -13,4 +13,21 @@ describe('Main CLI', () => {
       done();
     });
   });
+
+  it('should return the currency option when btc-converter --help', (done) => {
+    exec(`${btcConverter} --help`, (err, stdout, stderr) => {
+      if(err) throw err;
+      expect(stdout.includes('--currency')).to.be.true;
+      done();
+    });
+  });
+
+  it('should return the amount option when btc-converter --help', (done) => {
+    exec(`${btcConverter} --help`, (err, stdout, stderr) => {
+      if(err) throw err;
+      expect(stdout.includes('--amount')).to.be.true;
+      done();
+    });
+  });
+
 });
